@@ -1,0 +1,17 @@
+{% extends 'myproject_base\base.html' %}
+ 
+{% block content %} 
+
+  <p>Topics</p> 
+  <ul> 
+    {% for topic in topics %} 
+      <li> 
+        <a href="{% url 'myproject_base:topic' topic.id %}"> 
+            {{ topic.text }}</a> 
+      </li> 
+    {% empty %} 
+      <li>你还没有添加topic</li> 
+    {% endfor %}   </ul> 
+    <a href="{% url 'myproject_base:new_topic' %}">添加一个新主题</a>
+
+{% endblock content %}

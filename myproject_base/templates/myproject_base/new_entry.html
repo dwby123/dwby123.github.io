@@ -1,0 +1,12 @@
+{% extends "myproject_base/base.html" %} 
+{% block content %} 
+
+  <p><a href="{ url 'myproject_base:topic' topic.id %}"></a></p>
+  <p>添加一个新主题:</p> 
+  <form action="{% url 'myproject_base:new_entry' topic.id %}" method='post'> 
+    {% csrf_token %} 
+    {{ form.as_div }} 
+    <button name="submit">添加条目</button> 
+  </form> 
+
+{% endblock content %}
