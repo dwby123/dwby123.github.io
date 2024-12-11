@@ -46,7 +46,7 @@ def new_topic(request):
     return render (request,'myproject_base/new_topic.html',context)
 
 @login_required 
-def new_entry(request):
+def new_entry(request,topic_id):
     """在特定主题中添加新条目"""
     topic = Topic.objects.get(id=topic_id)
     #确认请求的主题属于当前⽤户
@@ -62,7 +62,7 @@ def new_entry(request):
             new_entry = form.save(commit=False)
             new_entry.topic = topic
             new_entry.save()
-            return redirect('myproject_base:topic,topic_id=topic_id')
+            return redirect('myproject_base:topic',topic_id=topic_id)
     #显示空表单或指出空表单无效
     context = {'topic': topic,'form': form}
     return render(request, 'myproject_base/new_entry.html',context)

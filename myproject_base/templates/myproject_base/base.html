@@ -1,28 +1,74 @@
-<p> 
-  <a href="{% url 'myproject_base:index' %}">首页</a> -
-  <a href="{% url 'myproject_base:topics' %}">Topics</a> -
-  {% if user.is_authenticated %} 
-    Hello, {{ user.username }}. 
-  {% else %} 
-    <a href="{% url 'accounts:register' %}">Register</a> - 
-    <a href="{% url 'accounts:login' %}">Log in</a> 
-  {% endif %} 
-</p> 
+<!doctype html> 
+<html lang="en"> 
+<head> 
+  <meta charset="utf-8"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1"> 
+  <title>学习笔记！</title> 
 
-{% block content %}
-<!-- 子模板会在此处插入具体的页面内容 -->
-{% endblock content %}
+  {% load django_bootstrap5 %}
+  {% bootstrap_css %} 
+  {% bootstrap_javascript %} 
+</head>
 
-<!-- 注销 -->
-{% if user.is_authenticated %} 
-  <hr /> 
-  <form action="{% url 'accounts:logout' %}" method='post'> 
-    {% csrf_token %} 
-    <button name='submit'>Log out</button> 
-  </form> 
-{% endif %}
+<body> 
+  <nav class="navbar navbar-expand-md navbar-light bg-light mb-4border"> 
+    <div class="container-fluid"> 
+      <a class="navbar-brand" href="{% url 'myproject_base:index' %}"> 
+        首页</a> 
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" 
+        data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" 
+            aria-expanded="false" aria-label="Toggle navigation"> 
+            <span class="navbar-toggler-icon"></span> 
+          </button> 
+          <div class="collapse navbar-collapse" id="navbarCollapse"> 
+            <ul class="navbar-nav me-auto mb-2 mb-md-0"> 
+              <li class="nav-item"> 
+                <a class="nav-link" href="{% url 'myproject_base:topics' %}"> 
+                  主题</a>
+              </li> 
+            </ul> <!--定义导航栏左侧链接的代码到此结束--> 
 
+            <ul class="navbar-nav ms-auto mb-2 mb-md-0">
+              {% if user.is_authenticated %}
+                <li class="nav-item">
+                  <span class="navbar-text me-2">你好, {{ user.username }}.</span>
+                </li>
+              {% else %}
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'accounts:register' %}">
+                    注册</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'accounts:login' %}">
+                    登录</a>
+                </li>
+              {% endif %}
+            </ul><!-- 与账户相关的链接到此结束 -->
 
-<footer>
-  <p>&copy; 这是页脚，请继续学习，相比以前你已经获得了了不起的成长，加油！</p>
-</footer>
+            {% if user.is_authenticated %}
+            <!-- 添加登出表单 -->
+            <form action="{% url 'accounts:logout' %}" method="post">
+              {% csrf_token %}
+              <button name="submit" class="btn btn-outline-secondary btn-sm">
+                退出</button>
+            </form>
+            {% endif %}          
+
+          </div> <!--定义导航栏可折叠部分的代码到此结束--> 
+      </div> <!-- 定义导航栏容器的代码到此结束--> 
+    </nav> <!-- 定义导航栏的代码到此结束--> 
+
+  <main class="container">
+    <!-- 页面标题部分 -->
+    <div class="pb-2 mb-2 border-bottom">
+      {% block page_header %}{% endblock %}
+    </div>
+    <!-- 页面内容部分 -->
+    <div>
+      {% block content %}{% endblock %}
+    </div>
+  </main>
+
+   
+</body> 
+</html>

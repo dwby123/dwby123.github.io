@@ -34,6 +34,9 @@ INSTALLED_APPS = [
     #我的应用程序
     'myproject_base',
     'accounts',
+    
+    #第三方应用程序
+    'django_bootstrap5',
 
     #django默认添加的应用程序
     'django.contrib.admin',

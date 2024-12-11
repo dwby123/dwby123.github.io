@@ -1,17 +1,21 @@
 {% extends 'myproject_base\base.html' %}
  
-{% block content %} 
+{% block page_header %}
+  <h1>主题</h1>
+{% endblock page_header %}
 
-  <p>Topics</p> 
-  <ul> 
-    {% for topic in topics %} 
-      <li> 
-        <a href="{% url 'myproject_base:topic' topic.id %}"> 
-            {{ topic.text }}</a> 
-      </li> 
-    {% empty %} 
-      <li>你还没有添加topic</li> 
-    {% endfor %}   </ul> 
-    <a href="{% url 'myproject_base:new_topic' %}">添加一个新主题</a>
+{% block content %}
+  <ul class="list-group border-bottom pb-2 mb-4">
+    {% for topic in topics %}
+      <li class="list-group-item border-0">
+        <a href="{% url 'myproject_base:topic' topic.id %}">
+          {{ topic.text }}
+        </a>
+      </li>
+    {% empty %}
+      <li class="list-group-item border-0">这里是空的，说点什么吧...</li>
+    {% endfor %}
+  </ul>
 
+  <a href="{% url 'myproject_base:new_topic' %}">添加主题</a>
 {% endblock content %}
